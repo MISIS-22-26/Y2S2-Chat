@@ -1,6 +1,6 @@
 namespace App.Core;
-public interface INode (string ip = "localhost", int port = 2002)
+public interface INode
 {
-	public string ip { get; private set; }
-	public int port { get; private set; }
+	public string ip { get; }
+	public int port { get; }
 }
