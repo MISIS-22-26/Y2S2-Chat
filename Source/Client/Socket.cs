@@ -5,7 +5,8 @@ public class Socket : Core.Socket.Socket<TcpClient>
 {
 	public override void Close()
 	{
-		throw new NotImplementedException();
+		if (!socket.Connected) return;
+		socket.Close();
 	}
 
 	public override void Open(string ip, int port)
