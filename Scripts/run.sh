@@ -1,9 +1,9 @@
 #!/bin/bash
 
-LAUNCH_DIRECTORY	=	${PWD}
-WORKING_DIRECTORY	=	$(dirname $0)/../
-SCRIPT_NAME			=	$(basename $0)
+LAUNCH_DIRECTORY=${PWD}
+WORKING_DIRECTORY=$(dirname $0)/../
+SCRIPT_NAME=$(basename $0)
 
-cd WORKING_DIRECTORY/
+cd $WORKING_DIRECTORY
 dotnet run --configuration Release
-cd LAUNCH_DIRECTORY
+cd $LAUNCH_DIRECTORY
