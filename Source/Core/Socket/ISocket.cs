@@ -3,9 +3,9 @@ public interface ISocket<T> where T : IDisposable
 {
 	protected T Socket { get; set; }
 	
-	public abstract void Open();
-	public abstract void Close();
+	public void Open();
+	public void Close();
 
-	public abstract void Write();
-	public abstract void Read();
+	public void Write();
+	public void Read();
 }
