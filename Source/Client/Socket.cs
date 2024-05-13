@@ -11,7 +11,11 @@ public class Socket : Core.Socket.Socket<TcpClient>
 
 	public override void Open(string ip, int port)
 	{
-		throw new NotImplementedException();
+		if(socket.Connected) return;
+		this.ip = ip;
+		this.port = port;
+
+		socket = new(ip, port);
 	}
 
 	public override void Read()
