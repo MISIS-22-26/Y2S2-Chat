@@ -3,9 +3,9 @@ public interface ISocket<T> where T : IDisposable
 {
 	protected T Socket { get; set; }
 	
-	public void Open();
-	public void Close();
+	public virtual void Open() => throw new NotImplementedException();
+	public virtual void Close() => throw new NotImplementedException();
 
-	public void Write();
-	public void Read();
+	public virtual void Write() => throw new NotFiniteNumberException();
+	public virtual void Read() => throw new NotImplementedException();
 }
