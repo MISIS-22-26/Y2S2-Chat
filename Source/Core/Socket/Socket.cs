@@ -1,7 +1,7 @@
 namespace App.Core.Socket;
 public abstract class Socket<T> : ISocket where T : IDisposable
 {
-	T socket { get; set; }
+	protected T socket { get; set; }
 	protected string ip { get; set; }
 	protected int port { get; set; }
 
