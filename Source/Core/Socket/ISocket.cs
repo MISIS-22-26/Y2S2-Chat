@@ -5,4 +5,7 @@ public interface ISocket<T> where T : IDisposable
 	
 	public void Open();
 	public void Close();
+
+	public void Write();
+	public void Read();
 }
