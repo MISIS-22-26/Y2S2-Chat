@@ -2,6 +2,7 @@
 public static class Program
 {
 	public static void Main(){
-		Console.WriteLine("Hello World");
+		Server.Server server = new();
+		server.Accept();
 	}
 }
