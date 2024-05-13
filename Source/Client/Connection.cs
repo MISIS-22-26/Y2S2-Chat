@@ -4,4 +4,5 @@ namespace App.Client;
 public struct Connection
 {
 	public Socket<TcpClient> tcp;
+	public Socket<UdpClient> udp;
 }
