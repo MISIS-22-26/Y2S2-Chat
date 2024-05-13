@@ -12,6 +12,7 @@ public class Socket : Core.Socket.Socket<TcpListener>
 	{
 		this.port = port;
 		socket = new(port);
+		socket.Start();
 		Console.WriteLine("Server Is Listening");
 		socket.AcceptSocket();
 		Console.WriteLine("Client Accepted.");
