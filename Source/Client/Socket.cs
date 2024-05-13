@@ -13,7 +13,15 @@ public class Socket : Core.Socket.Socket<TcpClient>
 	{
 		this.ip = ip;
 		this.port = port;
-		socket = new(ip, port);
+		try
+		{
+			socket = new(ip, port);
+			Console.WriteLine("Client Connected");
+		}
+		catch (SocketException)
+		{
+			Console.WriteLine("Refused by Server...");
+		}
 	}
 
 	public override void Read()
