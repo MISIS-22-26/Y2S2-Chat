@@ -1,10 +1,12 @@
 using App.Core;
-using App.Core.Socket;
 
 namespace App.Client;
-public class Client<T> : IRunnable where T : IDisposable
+public class Client : IRunnable
 {
-	protected Socket<T> socket { get; }
+	protected Socket socket { get; }
 	void IRunnable.Run() => throw new NotImplementedException();
 	public void Connect(string ip = "localhost", int port = 8888) => socket.Open(ip, port);
+	public Client(){
+		socket = new();
+	}
 }
