@@ -6,7 +6,7 @@ public abstract class Socket<T> : ISocket<T>, INode where T : IDisposable
 	int INode.port { get; set; }
 
 	public abstract void Close();
-	public abstract void Open();
+	public abstract void Open(string ip = "localhost", int port = 8888);
 	public abstract void Read();
 	public abstract void Write();
 }
