@@ -1,8 +1,6 @@
 namespace App.Core.Socket;
-public interface ISocket<T> where T : IDisposable
+public interface ISocket
 {
-	protected T socket { get; set; }
-	
 	public void Open(string ip, int port);
 	public void Close();
 
