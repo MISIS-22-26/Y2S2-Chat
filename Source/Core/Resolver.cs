@@ -1,5 +1,6 @@
 using System.Net;
 
+namespace App.Core;
 public class Resolver(string domain)
 {
 	public string domain { get; set; } = domain;
