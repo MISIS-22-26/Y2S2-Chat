@@ -1,5 +1,6 @@
 namespace App.Core;
-public class Connection(string server)
+public class Connection(string domain)
 {
-	Resolver resolver { get; } = new(server);
+	private Resolver resolver { get; } = new(domain);
+	
 }
