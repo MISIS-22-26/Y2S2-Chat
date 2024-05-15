@@ -1,5 +1,0 @@
-namespace App.Core;
-public abstract class Socket
-{
-	
-}
