@@ -11,4 +11,9 @@ public class Resolver(string domain)
 		IPHostEntry addresses = await Dns.GetHostEntryAsync(domain);
 		this.addresses = addresses.AddressList;
 	}
+
+	async Task Run()
+	{
+		while(enabled) await Resolve();
+	}
 }
