@@ -16,4 +16,10 @@ public class Resolver(string domain)
 	{
 		while(enabled) await Resolve();
 	}
+		public async void Start()
+	{
+		enabled = true;
+		await Run();
+	}
+	public void Stop() => enabled = false;
 }
