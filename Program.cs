@@ -2,7 +2,7 @@
 public static class Program
 {
 	public static void Main(){
-		Resolver resolver = new("google.com");
+		App.Core.Resolver resolver = new("localhost");
 		Console.WriteLine(resolver.address);
 	}
 }
