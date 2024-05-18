@@ -48,7 +48,6 @@ public class Socket(Mode mode, int port ,IPAddress? address = null , int buffer_
 
 	void Open()
 	{
-		// This is a comment
 		try
 		{
 
