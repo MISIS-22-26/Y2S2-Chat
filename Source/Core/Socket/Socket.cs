@@ -1,7 +1,7 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-namespace App.Core.Socket;
+namespace App.Core.Net;
 public class Socket(Mode mode, int port ,IPAddress? address = null , int buffer_size = 1024, ProtocolType protocol = ProtocolType.Tcp)
 {
 

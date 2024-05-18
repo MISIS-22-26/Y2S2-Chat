@@ -1,4 +1,4 @@
-namespace App.Core.Socket;
+namespace App.Core.Net;
 public enum Mode {
     Server, Client
 }
