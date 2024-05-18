@@ -7,16 +7,16 @@ public class Socket(Mode mode, int port ,IPAddress? address = null , int buffer_
 
 
 
-
-
-	IPAddress address { get; } = (address != null) ? address : IPAddress.Loopback; // Compiler wouldn't allow loopback address type to be passed as a default value, this ternary operation is needed to hack around it.
-
+	// Compiler wouldn't allow IPAddress.Loopbackloopback to be passed as 
+	// a default AddressType, thus coalesce expression with address fallback
+	// to null as a default are used here to hack around it.
+	IPAddress address { get; } = address ?? IPAddress.Loopback; 
 
 
 
 	
 	Mode mode { get; } = mode;
-	IPEndPoint endpoint { get; } = new(((address != null) ? address : IPAddress.Loopback), port);
+	IPEndPoint endpoint { get; } = new(address ?? IPAddress.Loopback, port);
 
 
 
