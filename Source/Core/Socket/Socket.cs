@@ -88,6 +88,37 @@ public class Socket(Mode mode, int port ,IPAddress? address = null , int buffer_
 	}
 
 
+
+
+	async Task Send() 
+	{
+		if (write_buffer.Length == 0) return;
+		switch (mode)
+		{
+			case Mode.Server :
+				await connection.SendAsync(write_buffer);
+			break;
+			case Mode.Client :
+				await socket.SendAsync(write_buffer);
+			break;
+		}
+	}
+	async Task Recieve() 
+	{
+		if (read_buffer.Length == 0) return;
+		switch (mode)
+		{
+			case Mode.Server :
+				await connection.ReceiveAsync(read_buffer);
+			break;
+			case Mode.Client :
+				await socket.ReceiveAsync(read_buffer);
+			break;
+		}
+	}
+
+
+
 	async Task Run()
 	{
 		System.Net.Sockets.Socket? target = null;
@@ -124,38 +155,6 @@ public class Socket(Mode mode, int port ,IPAddress? address = null , int buffer_
 		catch
 		{
 			Console.WriteLine("Failure whilst disconnecting socket..");
-		}
-	}
-
-
-
-
-
-
-	async Task Send() 
-	{
-		if (write_buffer.Length == 0) return;
-		switch (mode)
-		{
-			case Mode.Server :
-				await connection.SendAsync(write_buffer);
-			break;
-			case Mode.Client :
-				await socket.SendAsync(write_buffer);
-			break;
-		}
-	}
-	async Task Recieve() 
-	{
-		if (read_buffer.Length == 0) return;
-		switch (mode)
-		{
-			case Mode.Server :
-				await connection.ReceiveAsync(read_buffer);
-			break;
-			case Mode.Client :
-				await socket.ReceiveAsync(read_buffer);
-			break;
 		}
 	}
 
