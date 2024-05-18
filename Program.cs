@@ -1,8 +1,10 @@
 ﻿namespace App;
-public static class Program
+public class Program
 {
-	public static void Main(){
-		App.Core.Resolver resolver = new("localhost");
+	public static async Task Main(String[] args){
+		Core.Resolver resolver = new("localhost");
 		Console.WriteLine(resolver.address);
+        Core.Socket.Socket socket = new(Core.Socket.Mode.Server, 8888, System.Net.IPAddress.Loopback);
+		await socket.Start();
 	}
 }
