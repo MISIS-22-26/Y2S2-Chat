@@ -1,23 +1,11 @@
 namespace App.Core.Net.Socket;
-public struct Buffer
+public class Buffer(int size = 1024)
 {
-	public Core.Buffer ReadBuffer { get; private set; }
-	public Core.Buffer WriteBuffer { get; private set; }
-
-	public readonly void Flush()
+	public Core.Buffer ReadBuffer = new(size);
+	public Core.Buffer WriteBuffer = new(size);
+	public void Flush()
 	{
 		ReadBuffer.Flush();
 		WriteBuffer.Flush();
-	}
-
-	public Buffer(int size = 1024)
-	{
-		ReadBuffer = new(size: size);
-		WriteBuffer = new(size: size); 
-	}
-	public Buffer(int read_size = 1024, int write_size = 1024)
-	{
-		ReadBuffer = new(size: read_size);
-		WriteBuffer = new(size: write_size); 
 	}
 }
