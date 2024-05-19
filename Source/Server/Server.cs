@@ -1,12 +1,5 @@
-using App.Core;
-
 namespace App.Server;
-public class Server : IRunnable
+public class Server(int port = 8888)
 {
-	protected Socket socket { get; }
-	void IRunnable.Run() => throw new NotImplementedException();
-	public void Accept(string ip = "localhost", int port = 8888) => socket.Open(ip, port);
-	public Server(){
-		socket = new();
-	}
+	Socket socket = new(port);
 }
