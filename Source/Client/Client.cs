@@ -1,12 +1,8 @@
-using App.Core;
+using System.Net;
 
 namespace App.Client;
-public class Client : IRunnable
+public class Client(int port = 8888, IPAddress? address = null)
 {
-	protected Socket socket { get; }
-	void IRunnable.Run() => throw new NotImplementedException();
-	public void Connect(string ip = "localhost", int port = 8888) => socket.Open(ip, port);
-	public Client(){
-		socket = new();
-	}
+	Socket socket = new(port, address);
+	public async Task Start() => await socket.Run();
 }

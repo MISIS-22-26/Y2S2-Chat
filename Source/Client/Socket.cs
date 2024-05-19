@@ -1,35 +1,31 @@
-using System.Net.Sockets;
 
+using System.Text;
 namespace App.Client;
-public class Socket : Core.Socket.Socket<TcpClient>
+public class Socket(int port, System.Net.IPAddress? address = null, int buffer_size = 1024, System.Net.Sockets.ProtocolType protocol = System.Net.Sockets.ProtocolType.Tcp) : Core.Net.Socket.Socket(port, address, buffer_size, protocol)
 {
-	public override void Close()
-	{
-		socket.Close();
-	}
+	protected override void Init() => Body.Connect(Endpoint);
 
-	public override void Open(string ip, int port)
+	protected override async Task Recieve()
 	{
-		this.ip = ip;
-		this.port = port;
-		try
-		{
-			socket = new(ip, port);
-			Console.WriteLine("Client Connected");
-		}
-		catch (SocketException)
-		{
-			Console.WriteLine("Refused by Server...");
-		}
+		Buffer.ReadBuffer.Flush();
+		await Body.ReceiveAsync(Buffer.ReadBuffer.Body);
 	}
-
-	public override void Read()
+	protected override async Task Send()
 	{
-		throw new NotImplementedException();
+		await Body.SendAsync(Buffer.WriteBuffer.Body);
+		Buffer.WriteBuffer.Flush();
 	}
-
-	public override void Write()
+	async Task Tick()
 	{
-		throw new NotImplementedException();
+		Buffer.WriteBuffer.Body = Encoding.UTF8.GetBytes($"{Console.ReadLine()}");
+		await Send();
+		await Recieve();
+		Console.WriteLine(Encoding.UTF8.GetString(Buffer.ReadBuffer.Body));
+		Buffer.Flush();
+	}
+	public async Task Run()
+	{
+		Init();
+		while (Body.Connected) await Tick();
 	}
 }
