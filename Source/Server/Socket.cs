@@ -1,30 +1,42 @@
-using System.Net.Sockets;
-
+using System.Text;
 namespace App.Server;
-public class Socket : Core.Socket.Socket<TcpListener>
+public class Socket : App.Core.Net.Socket.Socket
 {
-	public override void Close()
+	protected System.Net.Sockets.Socket Target { get; set; }
+	protected override void Init()
 	{
-		socket.Stop();
+		Body.Bind(Endpoint);
+		Body.Listen();
+		Target = Body.Accept();
 	}
 
-	public override void Open(string ip, int port)
+	protected override void Recieve()
 	{
-		this.port = port;
-		socket = new(port);
-		socket.Start();
-		Console.WriteLine("Server Is Listening");
-		socket.AcceptSocket();
-		Console.WriteLine("Client Accepted.");
+		Buffer.ReadBuffer.Flush();
+		Target.Receive(Buffer.ReadBuffer.Body);
 	}
+	protected override void Send()
+	{
+		Target.Send(Buffer.WriteBuffer.Body);
+		Buffer.WriteBuffer.Flush();
+	}
+	void Tick()
+	{
+		// loopback behaviour
+		Recieve();
+		var message = Encoding.UTF8.GetString(Buffer.ReadBuffer.Body);
+		Console.WriteLine($"Recieved: {message}");
 
-	public override void Read()
-	{
-		throw new NotImplementedException();
-	}
+		Buffer.WriteBuffer.Body = Encoding.UTF8.GetBytes($"Somebody Wrote: {message}");
+		Send();	
 
-	public override void Write()
-	{
-		throw new NotImplementedException();
+		Buffer.Flush();
 	}
+	void Run()
+	{
+		Init();
+		while (Target.Connected) Tick();
+	}
+	public Socket(int port, int buffer_size = 1024, System.Net.Sockets.ProtocolType protocol = System.Net.Sockets.ProtocolType.Tcp) : base(port, null, buffer_size, protocol) => Run();
+
 }
