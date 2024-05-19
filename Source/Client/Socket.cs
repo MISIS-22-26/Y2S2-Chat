@@ -23,7 +23,7 @@ public class Socket(int port, System.Net.IPAddress? address = null, int buffer_s
 		Console.WriteLine(Encoding.UTF8.GetString(Buffer.ReadBuffer.Body));
 		Buffer.Flush();
 	}
-	async Task Run()
+	public async Task Run()
 	{
 		Init();
 		while (Body.Connected) await Tick();
