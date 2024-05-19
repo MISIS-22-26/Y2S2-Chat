@@ -1,5 +1,5 @@
 ﻿namespace App;
-public static class Program
+public class Program
 {
 	public static void Main(){
 		Server.Server server = new();

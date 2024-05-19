@@ -1,12 +1,31 @@
-namespace App.Core.Socket;
-public abstract class Socket<T> : ISocket where T : IDisposable
+using System.Net;
+using System.Net.Sockets;
+namespace App.Core.Net.Socket;
+public abstract class Socket(int port ,IPAddress? address = null, int buffer_size = 1024, ProtocolType protocol = ProtocolType.Tcp)
 {
-	protected T socket { get; set; }
-	protected string ip { get; set; }
-	protected int port { get; set; }
 
-	public abstract void Close();
-	public abstract void Open(string ip, int port);
-	public abstract void Read();
-	public abstract void Write();
+
+
+	// Compiler wouldn't allow IPAddress.Loopbackloopback to be passed as 
+	// a default AddressType, thus coalesce expression and null default 
+	// values are used here to work around it.
+	protected IPEndPoint Endpoint { get; } = new(address ?? IPAddress.Loopback, port);
+	protected System.Net.Sockets.Socket Body { get; } = new(AddressFamily.InterNetwork, SocketType.Stream, protocol);
+	protected Buffer Buffer { get; } = new(size: buffer_size);
+
+	protected abstract void Init ();
+	protected abstract void Send ();
+	protected abstract void Recieve ();
+	public void Close () 
+	{
+		try
+		{
+			Body.Shutdown(SocketShutdown.Both); 
+			Body.Close();
+		}
+		catch
+		{
+			Console.WriteLine("Socket Shutdown Failure");
+		}
+	}
 }
