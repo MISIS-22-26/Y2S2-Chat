@@ -9,7 +9,6 @@ public abstract class Socket(int port ,IPAddress? address = null, int buffer_siz
 	// Compiler wouldn't allow IPAddress.Loopbackloopback to be passed as 
 	// a default AddressType, thus coalesce expression and null default 
 	// values are used here to work around it.
-	IPAddress Address { get; } = address ?? IPAddress.Loopback; 
 	IPEndPoint Endpoint { get; } = new(address ?? IPAddress.Loopback, port);
 	System.Net.Sockets.Socket Body { get; } = new(AddressFamily.InterNetwork, SocketType.Stream, protocol);
 	Buffer Buffer { get; } = new(size: buffer_size);
