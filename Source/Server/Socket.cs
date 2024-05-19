@@ -32,7 +32,7 @@ public class Socket(int port, int buffer_size = 1024, System.Net.Sockets.Protoco
 
 		Buffer.Flush();
 	}
-	async Task Run()
+	public async Task Run()
 	{
 		Init();
 		while (Target.Connected) await Tick();
