@@ -10,32 +10,32 @@ public class Socket : App.Core.Net.Socket.Socket
 		Target = Body.Accept();
 	}
 
-	protected override void Recieve()
+	protected override async Task Recieve()
 	{
 		Buffer.ReadBuffer.Flush();
-		Target.Receive(Buffer.ReadBuffer.Body);
+		await Target.ReceiveAsync(Buffer.ReadBuffer.Body);
 	}
-	protected override void Send()
+	protected override async Task Send()
 	{
-		Target.Send(Buffer.WriteBuffer.Body);
+		await Target.SendAsync(Buffer.WriteBuffer.Body);
 		Buffer.WriteBuffer.Flush();
 	}
-	void Tick()
+	async Task Tick()
 	{
 		// loopback behaviour
-		Recieve();
+		await Recieve();
 		var message = Encoding.UTF8.GetString(Buffer.ReadBuffer.Body);
 		Console.WriteLine($"Recieved: {message}");
 
 		Buffer.WriteBuffer.Body = Encoding.UTF8.GetBytes($"Somebody Wrote: {message}");
-		Send();	
+		await Send();	
 
 		Buffer.Flush();
 	}
-	void Run()
+	async Task Run()
 	{
 		Init();
-		while (Target.Connected) Tick();
+		while (Target.Connected) await Tick();
 	}
 	public Socket(int port, int buffer_size = 1024, System.Net.Sockets.ProtocolType protocol = System.Net.Sockets.ProtocolType.Tcp) : base(port, null, buffer_size, protocol) => Run();
 
