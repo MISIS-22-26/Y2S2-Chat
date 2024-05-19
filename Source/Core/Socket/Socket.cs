@@ -14,8 +14,8 @@ public abstract class Socket(int port ,IPAddress? address = null, int buffer_siz
 	protected Buffer Buffer { get; } = new(size: buffer_size);
 
 	protected abstract void Init ();
-	protected abstract void Send ();
-	protected abstract void Recieve ();
+	protected abstract Task Send ();
+	protected abstract Task Recieve ();
 	public void Close () 
 	{
 		try
