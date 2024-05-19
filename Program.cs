@@ -2,7 +2,6 @@
 public class Program
 {
 	public static void Main(){
-		Client.Client client = new();
-		client.Connect();
+		new Client.Client();
 	}
 }
