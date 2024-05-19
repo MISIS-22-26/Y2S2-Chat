@@ -1,6 +1,6 @@
 using System.Text;
 namespace App.Server;
-public class Socket : App.Core.Net.Socket.Socket
+public class Socket(int port, int buffer_size = 1024, System.Net.Sockets.ProtocolType protocol = System.Net.Sockets.ProtocolType.Tcp) : Core.Net.Socket.Socket(port, null, buffer_size, protocol)
 {
 	protected System.Net.Sockets.Socket Target { get; set; }
 	protected override void Init()
@@ -37,6 +37,4 @@ public class Socket : App.Core.Net.Socket.Socket
 		Init();
 		while (Target.Connected) await Tick();
 	}
-	public Socket(int port, int buffer_size = 1024, System.Net.Sockets.ProtocolType protocol = System.Net.Sockets.ProtocolType.Tcp) : base(port, null, buffer_size, protocol) => Run();
-
 }
