@@ -16,7 +16,7 @@ public abstract class Socket(int port ,IPAddress? address = null, int buffer_siz
 	protected abstract void Init ();
 	protected abstract void Send ();
 	protected abstract void Recieve ();
-	public void Stop () 
+	public void Close () 
 	{
 		try
 		{
