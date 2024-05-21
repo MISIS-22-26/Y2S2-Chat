@@ -10,7 +10,8 @@ public interface IRunnable
         if (Running || Startup || Shutdown) return;
         
         Startup = true;
-        Run();
+        Thread ??= new(new ThreadStart(Run)); // If thread is null
+        Thread.Start();
         Startup = false;
     }
     protected void Tick();
