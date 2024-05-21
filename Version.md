@@ -13,4 +13,7 @@ This file contains versions of the app as well as key features of a release:
 	2. Added One to One Socket Connection with the ability to wirite messages to one another
 #### TODO
 	1. Make Client-Server Response not Buggy (Delayed output bug)
+		1.1. Move reader to different thread
+		1.2. Move writer to different thread
+		1.3. Move Printer to different thread
 	2. Add Multi-Client Connection Server
