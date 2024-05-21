@@ -15,7 +15,6 @@ public abstract class Socket(IPAddress? address, int port, ProtocolType protocol
 	public Reader Reader { get; }
 	public Writer Writer { get; }
 	protected abstract void Setup();
-	protected abstract Task Send ();
 	public void Init (){
 		Setup();
 		Proccesses.Add((IRunnable) Reader);
