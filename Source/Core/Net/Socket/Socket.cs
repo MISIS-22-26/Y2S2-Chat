@@ -17,6 +17,13 @@ public abstract class Socket(IPAddress? address, int port, ProtocolType protocol
 	protected abstract void Setup();
 	protected abstract Task Send ();
 	protected abstract Task Recieve ();
+	public void Init (){
+		Setup();
+		Proccesses.Add((IRunnable) Reader);
+		Proccesses.Add((IRunnable) Writer);
+
+		foreach(var proccess in Proccesses) proccess.Start();
+	}
 	public void Close () 
 	{
 		try
