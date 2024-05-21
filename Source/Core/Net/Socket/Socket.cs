@@ -4,7 +4,7 @@ using App.Core.IO;
 
 
 namespace App.Core.Net.Socket;
-public abstract class Socket(IPAddress? address = null, int port = 8888, int buffer_size = 1024, ProtocolType protocol = ProtocolType.Tcp)
+public abstract class Socket(IPAddress? address, int port, ProtocolType protocol, int buffer_size)
 {
 	// Compiler wouldn't allow IPAddress.Loopbackloopback to be passed as 
 	// a default AddressType, thus coalesce expression and null default 
