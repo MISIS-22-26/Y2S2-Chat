@@ -18,7 +18,7 @@ public abstract class Socket(IPAddress? address, int port, ProtocolType protocol
 
 	protected List<IRunnable> Proccesses { get; } = [];
 	public Reader Reader { get; } = reader;
-	public Writer Writer { get; }
+	public Writer Writer { get; } = writer;
 	
 	
 
