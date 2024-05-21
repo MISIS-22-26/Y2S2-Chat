@@ -7,6 +7,8 @@ public interface IRunnable
     public bool Running { get; protected set; }
     public void Start()
     {
+        if (Running || Startup || Shutdown) return;
+        
         Startup = true;
         Run();
     }
