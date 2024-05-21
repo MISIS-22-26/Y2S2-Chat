@@ -12,7 +12,6 @@ public interface IRunnable
     protected void Tick();
     private void Run()
     {
-        Startup = false;
         Running = true;
         while(!Shutdown) Tick();
         Running = false;
