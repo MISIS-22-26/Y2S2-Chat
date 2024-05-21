@@ -28,6 +28,7 @@ public abstract class Socket(IPAddress? address, int port, ProtocolType protocol
 	{
 		try
 		{
+			foreach (var proccess in Proccesses) proccess.Stop();
 			Body.Shutdown(SocketShutdown.Both); 
 			Body.Close();
 		}
