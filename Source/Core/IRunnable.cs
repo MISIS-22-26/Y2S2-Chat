@@ -1,6 +1,7 @@
 namespace App.Core;
 public interface IRunnable
 {
+    protected Thread? Thread { get; set; }
     public bool Shutdown { get; protected set; }
     public bool Startup { get; protected set; }
     public bool Running { get; protected set; }
