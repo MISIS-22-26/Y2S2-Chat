@@ -14,7 +14,7 @@ public abstract class Socket(IPAddress? address, int port, ProtocolType protocol
 	protected List<IRunnable> Proccesses { get; } = [];
 	public Reader Reader { get; }
 	public Writer Writer { get; }
-	protected abstract void Init ();
+	protected abstract void Setup();
 	protected abstract Task Send ();
 	protected abstract Task Recieve ();
 	public void Close () 
