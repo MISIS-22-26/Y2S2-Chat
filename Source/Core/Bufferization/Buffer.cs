@@ -1,4 +1,4 @@
-namespace App.Core;
+namespace App.Core.Bufferization;
 
 // struct since it contains mostly links to the objects in haep, so it is a good idea to place buffer in stack.
 public class Buffer<T>(int size = 1024)
