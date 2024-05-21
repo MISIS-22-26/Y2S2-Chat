@@ -11,7 +11,7 @@ public abstract class Socket(IPAddress? address = null, int port = 8888, int buf
 	// values are used here to work around it
 	protected IPEndPoint Endpoint { get; } = new(address ?? IPAddress.Loopback, port);
 	protected System.Net.Sockets.Socket Body { get; } = new(AddressFamily.InterNetwork, SocketType.Stream, protocol);
-	protected Reader Reader { get; }
+	public Reader Reader { get; }
 	protected Writer Writer { get; }
 	protected abstract void Init ();
 	protected abstract Task Send ();
