@@ -1,17 +1,18 @@
 using System.Net;
 using System.Net.Sockets;
-using App.Core.Bufferization;
+using App.Core.IO;
+
 
 namespace App.Core.Net.Socket;
-public abstract class Socket(int port ,IPAddress? address = null, int buffer_size = 1024, ProtocolType protocol = ProtocolType.Tcp)
+public abstract class Socket(IPAddress? address = null, int port = 8888, int buffer_size = 1024, ProtocolType protocol = ProtocolType.Tcp)
 {
 	// Compiler wouldn't allow IPAddress.Loopbackloopback to be passed as 
 	// a default AddressType, thus coalesce expression and null default 
-	// values are used here to work around it.
+	// values are used here to work around it
 	protected IPEndPoint Endpoint { get; } = new(address ?? IPAddress.Loopback, port);
 	protected System.Net.Sockets.Socket Body { get; } = new(AddressFamily.InterNetwork, SocketType.Stream, protocol);
-	protected IOBuffer Buffer { get; } = new(size: buffer_size);
-
+	protected Reader Reader { get; }
+	protected Writer Writer { get; }
 	protected abstract void Init ();
 	protected abstract Task Send ();
 	protected abstract Task Recieve ();
