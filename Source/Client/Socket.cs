@@ -17,11 +17,21 @@ public class Socket(int port, System.Net.IPAddress? address = null, int buffer_s
 	}
 	async Task Tick()
 	{
-		Buffer.WriteBuffer.Body = Encoding.UTF8.GetBytes($"{Console.ReadLine()}");
-		await Send();
+		string output = $"{Console.ReadLine()}";
+		if(output != "")
+		{
+			Buffer.WriteBuffer.Body = Encoding.UTF8.GetBytes(output);
+			await Send();
+			Buffer.WriteBuffer.Flush();
+		}
 		await Recieve();
-		Console.WriteLine(Encoding.UTF8.GetString(Buffer.ReadBuffer.Body));
-		Buffer.Flush();
+
+		string input = Encoding.UTF8.GetString(Buffer.ReadBuffer.Body);
+		if(input != "")
+		{
+			Console.WriteLine(input);
+			Buffer.WriteBuffer.Flush();
+		}
 	}
 	public async Task Run()
 	{
