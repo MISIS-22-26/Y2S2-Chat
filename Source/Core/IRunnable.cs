@@ -18,6 +18,8 @@ public interface IRunnable
         Running = true;
         while(!Shutdown) Tick();
         Running = false;
+        
+        Shutdown = false;
     }
     public void Stop() => Shutdown = true;
 }
