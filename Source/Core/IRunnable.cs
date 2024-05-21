@@ -11,6 +11,7 @@ public interface IRunnable
         
         Startup = true;
         Run();
+        Startup = false;
     }
     protected void Tick();
     private void Run()
