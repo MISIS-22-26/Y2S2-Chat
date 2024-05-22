@@ -6,6 +6,7 @@ using App.Core.IO;
 namespace App.Core.Net;
 public abstract class Socket(IPAddress? address, int port, ProtocolType protocol, Reader reader, Writer writer)
 {
+	public bool Connected => Body.Connected;
 	protected IPEndPoint Endpoint { get; } = new(address ?? IPAddress.Loopback, port);
 	protected System.Net.Sockets.Socket Body { get; } = new(AddressFamily.InterNetwork, SocketType.Stream, protocol);
 	protected List<IRunnable> Proccesses { get; } = [];
