@@ -3,8 +3,7 @@ using App.Core.Exceptions;
 namespace App.Core.Bufferization;
 public interface IBufferized<T>
 {
-    protected bool busy { get; set; }
-    public bool Busy { get => busy; protected set => busy = value; }
+    public bool Busy { get; protected set; }
     
     protected Buffer<T> buffer { get; set; }
     public Buffer<T> Buffer
