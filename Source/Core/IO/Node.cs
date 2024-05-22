@@ -5,7 +5,7 @@ namespace App.Core.IO;
 public class Node(int buffer_size) : IRunnable
 {
 	private Internal.Buffer buffer { get; set; } = new(size: buffer_size);
-	protected Buffer<byte> Buffer => ((IBufferized<byte>) buffer).Buffer;
+	public Buffer<byte> Buffer => ((IBufferized<byte>) buffer).Buffer;
     bool IRunnable.TickState { get; set; } = false;
 	public bool Operating => ((IRunnable) this).TickState;
 
