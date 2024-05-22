@@ -14,8 +14,6 @@ public class Node(int buffer_size) : IRunnable
 	bool IRunnable.Shutdown { get; set; } = false;
 	bool IRunnable.Startup { get; set; } = false;
 	bool IRunnable.Running { get; set; } = false;
-
-	void IRunnable.Start() => ((IRunnable) this).Start();
     void IRunnable.Tick() => Operate();
 
 
