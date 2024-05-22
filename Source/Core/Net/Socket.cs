@@ -3,7 +3,7 @@ using System.Net.Sockets;
 using App.Core.IO;
 
 
-namespace App.Core.Net.Socket;
+namespace App.Core.Net;
 public abstract class Socket(IPAddress? address, int port, ProtocolType protocol, Reader reader, Writer writer)
 {
 	// Compiler wouldn't allow IPAddress.Loopbackloopback to be passed as 
@@ -16,18 +16,20 @@ public abstract class Socket(IPAddress? address, int port, ProtocolType protocol
 
 
 
-	protected List<IRunnable> Proccesses { get; } = [];
+	protected List<Node> Proccesses { get; } = [];
 	public Reader Reader { get; } = reader;
 	public Writer Writer { get; } = writer;
 	
 	
 
-
+	// User-Defined Preparations before actual Startup.
 	protected abstract void Setup();
+	
+	// Core-Defined Preparations with followed up startup
 	public void Init (){
 		Setup();
-		Proccesses.Add((IRunnable) Reader);
-		Proccesses.Add((IRunnable) Writer);
+		Proccesses.Add(Reader);
+		Proccesses.Add(Writer);
 
 		foreach(var proccess in Proccesses) proccess.Start();
 	}
@@ -35,7 +37,7 @@ public abstract class Socket(IPAddress? address, int port, ProtocolType protocol
 	{
 		try
 		{
-			foreach (var proccess in Proccesses) proccess.Stop();
+			foreach (var proccess in Proccesses) ((IRunnable) proccess).Stop();
 			Body.Shutdown(SocketShutdown.Both); 
 			Body.Close();
 		}
