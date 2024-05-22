@@ -16,7 +16,7 @@ public abstract class Socket(IPAddress? address, int port, ProtocolType protocol
 
 
 
-	protected List<IRunnable> Proccesses { get; } = [];
+	protected List<Node> Proccesses { get; } = [];
 	public Reader Reader { get; } = reader;
 	public Writer Writer { get; } = writer;
 	
@@ -26,8 +26,8 @@ public abstract class Socket(IPAddress? address, int port, ProtocolType protocol
 	protected abstract void Setup();
 	public void Init (){
 		Setup();
-		Proccesses.Add((IRunnable) Reader);
-		Proccesses.Add((IRunnable) Writer);
+		Proccesses.Add(Reader);
+		Proccesses.Add(Writer);
 
 		foreach(var proccess in Proccesses) proccess.Start();
 	}
@@ -35,7 +35,7 @@ public abstract class Socket(IPAddress? address, int port, ProtocolType protocol
 	{
 		try
 		{
-			foreach (var proccess in Proccesses) proccess.Stop();
+			foreach (var proccess in Proccesses) ((IRunnable) proccess).Stop();
 			Body.Shutdown(SocketShutdown.Both); 
 			Body.Close();
 		}
