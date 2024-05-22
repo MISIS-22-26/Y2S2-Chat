@@ -1,7 +1,7 @@
 
 using System.Text;
 namespace App.Client;
-public class Socket(int port, System.Net.IPAddress? address = null, int buffer_size = 1024, System.Net.Sockets.ProtocolType protocol = System.Net.Sockets.ProtocolType.Tcp) : Core.Net.Socket.Socket(port, address, buffer_size, protocol)
+public class Socket(int port, System.Net.IPAddress? address = null, System.Net.Sockets.ProtocolType protocol = System.Net.Sockets.ProtocolType.Tcp) : Core.Net.Socket.Socket(port, address, buffer_size, protocol)
 {
 	protected override void Init() => Body.Connect(Endpoint);
 
