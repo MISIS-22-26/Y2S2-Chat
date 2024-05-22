@@ -6,6 +6,7 @@
     <RootNamespace>cappa_chat</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <OutDir>bin</OutDir>
   </PropertyGroup>
 
 </Project>
