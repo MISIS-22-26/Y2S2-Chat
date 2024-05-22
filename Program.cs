@@ -1,7 +1,10 @@
-﻿namespace App;
+﻿using System.Net;
+using System.Net.Sockets;
+namespace App.Client;
 public class Program
 {
-	public static async Task Main(){
-		await new Client.Client().Start();
+	public static void Main(string[] args)
+	{
+		new Client(IPAddress.Loopback, 8888, ProtocolType.Tcp).Start();
 	}
 }
