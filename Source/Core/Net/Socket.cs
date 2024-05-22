@@ -16,7 +16,7 @@ public abstract class Socket(IPAddress? address, int port, ProtocolType protocol
 
 
 
-	protected List<Node> Proccesses { get; } = [];
+	protected List<IRunnable> Proccesses { get; } = [];
 	public Reader Reader { get; } = reader;
 	public Writer Writer { get; } = writer;
 	
@@ -37,7 +37,7 @@ public abstract class Socket(IPAddress? address, int port, ProtocolType protocol
 	{
 		try
 		{
-			foreach (var proccess in Proccesses) ((IRunnable) proccess).Stop();
+			foreach (var proccess in Proccesses) proccess.Stop();
 			Body.Shutdown(SocketShutdown.Both); 
 			Body.Close();
 		}
