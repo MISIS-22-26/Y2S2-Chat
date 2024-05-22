@@ -4,21 +4,23 @@ using App.Core.IO;
 
 
 namespace App.Core.Net;
-public abstract class Socket(IPAddress? address, int port, ProtocolType protocol, Reader reader, Writer writer)
+public abstract class Socket(IPAddress? address, int port, ProtocolType protocol, int buffer_size)
 {
+	public int BufferSize { get; } = buffer_size;
 	protected IPEndPoint Endpoint { get; } = new(address ?? IPAddress.Loopback, port);
-	public System.Net.Sockets.Socket Body { get; } = new(AddressFamily.InterNetwork, SocketType.Stream, protocol);
+	public System.Net.Sockets.Socket Body { get;} = new(AddressFamily.InterNetwork, SocketType.Stream, protocol);
 	protected List<IRunnable> Proccesses { get; } = [];
 
 
 	
-	public Reader Reader { get; } = reader;
-	public Writer Writer { get; } = writer;
+	public Reader Reader { get; protected set; }
+	public Writer Writer { get; protected set; }
 	
 	
 
 	protected abstract void Init();
-	public void Open (){
+	public void Open()
+	{
 		Init();
 		Proccesses.Add(Reader);
 		Proccesses.Add(Writer);
