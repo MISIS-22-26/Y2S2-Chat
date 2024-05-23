@@ -13,8 +13,8 @@ public abstract class Socket(IPAddress? address, int port, ProtocolType protocol
 
 
 	
-	public Reader Reader { get; protected set; }
-	public Writer Writer { get; protected set; }
+	public Reader<byte> Reader { get; protected set; }
+	public Writer<byte> Writer { get; protected set; }
 	
 	
 
