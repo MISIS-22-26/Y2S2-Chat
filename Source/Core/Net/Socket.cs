@@ -15,18 +15,20 @@ public abstract class Socket
 	
 		Endpoint = endpoint;
 		Body = socket;
-
 		Reader = new(buffer_size);
 		Writer = new(buffer_size);
+
+		((Multithreading.IRunnable) this).Initialize();
 	}
 	public Socket(System.Net.Sockets.Socket socket, int buffer_size)
 	{
 		BufferSize = buffer_size;
 		Body = socket;
 		Endpoint = socket.LocalEndPoint;
-
 		Reader = new(buffer_size);
 		Writer = new(buffer_size);
+
+		((Multithreading.IRunnable) this).Initialize();
 	}
 
 
