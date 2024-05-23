@@ -1,13 +1,6 @@
-
-using App.Core.Bufferization;
-
 namespace App.Core.IO;
-public class Node(int buffer_size) : IRunnable
+public class Node : IRunnable
 {
-	public Buffer<byte> Buffer { get; } = new(buffer_size);
-
-
-
     /* IRunnable Implementation */
 
     Thread? IRunnable.Thread { get; set; } = null;
