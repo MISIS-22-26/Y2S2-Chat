@@ -8,6 +8,6 @@ public class Socket(System.Net.IPAddress? address, int port, System.Net.Sockets.
 	{
 		Reader = new IO.Reader(Body, BufferSize);
 		Writer = new IO.Writer(Body, BufferSize);
-		Body.Connect(Endpoint);
+		Body.Connect(Endpoint ?? throw new NullReferenceException(" Endpoint can not be null"));
 	}
 }
