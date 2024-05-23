@@ -25,8 +25,10 @@ public abstract class Socket(System.Net.Sockets.Socket socket, int buffer_size)
 	public void Open()
 	{
 		Init();
-		Proccesses.Add(Reader);
-		Proccesses.Add(Writer);
+
+		 // If null throw null ref exception
+		Proccesses.Add(Reader ?? throw new NullReferenceException("Reader Can't be null"));
+		Proccesses.Add(Reader ?? throw new NullReferenceException("Writer Can't be null"));
 
 		foreach(var proccess in Proccesses) proccess.Start();
 	}
