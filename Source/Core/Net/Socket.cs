@@ -4,18 +4,32 @@ using App.Core.IO;
 
 
 namespace App.Core.Net;
-public abstract class Socket(System.Net.Sockets.Socket socket, int buffer_size)
+public abstract class Socket
 {
-    public Socket(IPAddress? address, int port, ProtocolType protocol, int buffer_size) : this(new(new IPEndPoint(address ?? IPAddress.Loopback, port).AddressFamily , SocketType.Stream, protocol), buffer_size) {}
-
-
-
-    public int BufferSize { get; } = buffer_size;
-    public System.Net.Sockets.Socket Body { get; } = socket;
-    protected List<IRunnable> Proccesses { get; } = [];
-
-
+    public Socket(IPAddress? address, int port, ProtocolType protocol, int buffer_size)
+	{
+		BufferSize = buffer_size;
+		
+		var endpoint = new IPEndPoint(address ?? IPAddress.Loopback, port);
+		var socket = new System.Net.Sockets.Socket(endpoint.AddressFamily, SocketType.Stream, protocol);		
 	
+		Endpoint = endpoint;
+		Body = socket;
+	}
+	public Socket(System.Net.Sockets.Socket socket, int buffer_size)
+	{
+		BufferSize = buffer_size;
+		Body = socket;
+		Endpoint = socket.LocalEndPoint;
+	}
+
+
+	public EndPoint? Endpoint { get; }
+    public System.Net.Sockets.Socket Body { get; }
+
+
+	public int BufferSize { get; }
+    protected List<IRunnable> Proccesses { get; } = [];
 	public Reader<byte>? Reader { get; protected set; } = null;
 	public Writer<byte>? Writer { get; protected set; } = null;
 	
