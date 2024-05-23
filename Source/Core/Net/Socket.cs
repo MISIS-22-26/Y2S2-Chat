@@ -6,7 +6,7 @@ using App.Core.IO;
 namespace App.Core.Net;
 public abstract class Socket
 {
-    public Socket(IPAddress? address, int port, ProtocolType protocol, int buffer_size)
+    public Socket(IPAddress address, int port, ProtocolType protocol, int buffer_size)
 	{
 		BufferSize = buffer_size;
 		
@@ -15,12 +15,18 @@ public abstract class Socket
 	
 		Endpoint = endpoint;
 		Body = socket;
+
+		Reader = new(buffer_size);
+		Writer = new(buffer_size);
 	}
 	public Socket(System.Net.Sockets.Socket socket, int buffer_size)
 	{
 		BufferSize = buffer_size;
 		Body = socket;
 		Endpoint = socket.LocalEndPoint;
+
+		Reader = new(buffer_size);
+		Writer = new(buffer_size);
 	}
 
 
@@ -29,9 +35,9 @@ public abstract class Socket
 
 
 	public int BufferSize { get; }
-    protected List<IRunnable> Proccesses { get; } = [];
-	public Reader<byte>? Reader { get; protected set; } = null;
-	public Writer<byte>? Writer { get; protected set; } = null;
+    protected List<Multithreading.IRunnable> Proccesses { get; } = [];
+	public Reader<byte> Reader { get; protected set; }
+	public Writer<byte> Writer { get; protected set; }
 	
 	
 
