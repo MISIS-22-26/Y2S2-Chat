@@ -1,5 +1,5 @@
 namespace App.Core.IO;
-public abstract class Accepter<T> : Node
+public abstract class Accepter<T> : Multithreading.Proccess
 {
     public List<T> Accepted { get; } = [];
 	protected abstract void Accept();
