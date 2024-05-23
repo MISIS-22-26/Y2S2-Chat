@@ -1,40 +1,16 @@
-using System.Text;
+
 namespace App.Server;
-public class Socket(int port, int buffer_size = 1024, System.Net.Sockets.ProtocolType protocol = System.Net.Sockets.ProtocolType.Tcp) : Core.Net.Socket.Socket(port, null, buffer_size, protocol)
+public class Socket(System.Net.IPAddress? address, int port, System.Net.Sockets.ProtocolType protocol, int buffer_size) : Core.Net.Socket(address,port,protocol,buffer_size)
 {
-	protected System.Net.Sockets.Socket Target { get; set; }
+	public byte[] Read() => Reader.Buffer.Body;
+	public void Write(ref byte[] data) => Writer.Buffer.Body = data;
+	public IO.Accepter Accepter { get; protected set; }
+
 	protected override void Init()
 	{
-		Body.Bind(Endpoint);
-		Body.Listen();
-		Target = Body.Accept();
-	}
-
-	protected override async Task Recieve()
-	{
-		Buffer.ReadBuffer.Flush();
-		await Target.ReceiveAsync(Buffer.ReadBuffer.Body);
-	}
-	protected override async Task Send()
-	{
-		await Target.SendAsync(Buffer.WriteBuffer.Body);
-		Buffer.WriteBuffer.Flush();
-	}
-	async Task Tick()
-	{
-		// loopback behaviour
-		await Recieve();
-		var message = Encoding.UTF8.GetString(Buffer.ReadBuffer.Body);
-		Console.WriteLine($"Recieved: {message}");
-
-		Buffer.WriteBuffer.Body = Encoding.UTF8.GetBytes($"Somebody Wrote: {message}");
-		await Send();	
-
-		Buffer.Flush();
-	}
-	public async Task Run()
-	{
-		Init();
-		while (Target.Connected) await Tick();
+		Accepter = new IO.Accepter(Body);
+		// Reimplement:
+		// Reader = new IO.Reader(Body, BufferSize);
+		// Writer = new IO.Writer(Body, BufferSize);
 	}
 }
