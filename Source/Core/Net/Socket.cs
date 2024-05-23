@@ -24,7 +24,7 @@ public abstract class Socket
 	}
 
 
-	public EndPoint? Endpoint { get; }
+	public EndPoint? Endpoint { get; protected set; }
     public System.Net.Sockets.Socket Body { get; }
 
 
