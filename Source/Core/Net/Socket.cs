@@ -1,39 +1,42 @@
 using System.Net;
 using System.Net.Sockets;
 using App.Core.IO;
+using App.Core.Multithreading;
 
 
 namespace App.Core.Net;
-public abstract class Socket
+public abstract class Socket<R,W> where R : Reader<byte> where W : Writer<byte>
 {
-	public Socket(IPAddress address, int port, ProtocolType protocol, int buffer_size, Reader<byte> reader, Writer<byte> writer)
+	public Socket(IPAddress address, int port, ProtocolType protocol, R reader, W writer)
 	{
-		BufferSize = buffer_size;
-		
-		var endpoint = new IPEndPoint(address ?? IPAddress.Loopback, port);
-		var socket = new System.Net.Sockets.Socket(endpoint.AddressFamily, SocketType.Stream, protocol);		
-	
-		Endpoint = endpoint;
-		Body = socket;
 
+		// Network
+		Endpoint = new IPEndPoint(address, port);
+		Body = new Socket(Endpoint.AddressFamily, SocketType.Stream, protocol); // socket
+
+
+		// Bufferized IO
 		Reader = reader;
 		Writer = writer;
-
 		Proccesses.Add(Reader);
 		Proccesses.Add(Writer);
 
 	}
+
+
+	/* Network */
 	public EndPoint Endpoint { get; protected set; }
-    public System.Net.Sockets.Socket Body { get; }
+    public Socket Body { get; }
 
 
-	public int BufferSize { get; }
-    protected List<Multithreading.IRunnable> Proccesses { get; } = [];
-	public Reader<byte> Reader { get; protected set; }
-	public Writer<byte> Writer { get; protected set; }
+	/* Bufferized IO */
+    protected List<IRunnable> Proccesses { get; } = [];
+	public R Reader { get; protected set; }
+	public W Writer { get; protected set; }
 	
 	
 
+	/* Controllers */
 	protected abstract void Init();
 	public void Open()
 	{
