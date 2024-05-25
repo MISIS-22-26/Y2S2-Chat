@@ -9,5 +9,10 @@ public class Socket
 {
 	public byte[] Read() => Reader.Buffer.Body;
 	public void Write(ref byte[] data) => Writer.Buffer.Body = data;
-	protected override void Init() => Body.Connect(Endpoint); // TODO handle socket connection refused exception
+	protected override void Init()
+	{
+		Body.Connect(Endpoint); // TODO handle socket connection refused exception
+		Reader.Socket = Body;
+		Writer.Socket = Body;
+	}
 }
