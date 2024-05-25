@@ -20,11 +20,19 @@ public interface IRunnable
 	{   
 		if (Running || Startup || Shutdown) return;
 		
+		if (!Initialized)
+		{
+
+			if(!Initializing) Initializing = true;
+			Thread ??= new(start: new ThreadStart(Run)); // If thread is null
 		Initialize();
+			Initializing = false;
+		}
+
+		
 		
 		Startup = true;
-		Thread ??= new(new ThreadStart(Run)); // If thread is null
-		Thread.Start();
+		Thread?.Start();
 		Startup = false;
 	}
 	public bool Startup { get; protected set; }
@@ -42,13 +50,9 @@ public interface IRunnable
 	public void Initialize()
 	{
 		// Ensures singular Init() execution and state shift
-		if(!Initialized)
-		{
-			Initializing = true;
+		if(Initialized) return;
 			Init();
 			Initialized = true;
-			Initializing = false;
-		}
 	} // Method, which iensures singular Init() call during init. Is called by <External Initializer>() or by Start() during startup
 	public bool Initialized { get; protected set; }
 	public bool Initializing { get; protected set; }
