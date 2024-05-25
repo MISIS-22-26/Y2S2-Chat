@@ -25,6 +25,7 @@ public interface IRunnable
 
 			if(!Initializing) Initializing = true;
 			Thread ??= new(start: new ThreadStart(Run)); // If thread is null
+			Thread.Name = Name;
 		Initialize();
 			Initializing = false;
 		}
