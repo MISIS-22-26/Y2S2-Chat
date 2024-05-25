@@ -1,6 +1,6 @@
 namespace App.Core.IO;
-public abstract class Reader<T>(int buffer_size) : Bufferizer<T>(buffer_size)
+public class Reader<T>(int buffer_size, string proccess_name = "Bufferized Reader") : Bufferized<T>(buffer_size, proccess_name)
 {
-	protected abstract void Read();
+	protected virtual void Read() {}
     protected override void Operate() => Read();
 }

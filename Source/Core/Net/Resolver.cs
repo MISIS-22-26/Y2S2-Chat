@@ -1,18 +1,14 @@
 using System.Net;
+using App.Core.Multithreading;
 namespace App.Core.Net;
-public class Resolver(string domain) : IRunnable
+
+// A simple Threaded DNS resolver
+public class Resolver(string domain, string proccess_name = "Resolver Proccess") : Proccess(proccess_name)
 {
-	public string Domain { get; set; } = domain;
+	public string Domain { get; } = domain;
 	public IPAddress[] Addresses { get; private set; } = [];
 	public IPAddress Address => Addresses[0];
 
-	/* IRunnable Implementation */
-
-    Thread? IRunnable.Thread { get; set; } = null;
-	bool IRunnable.Initializing { get; set; } = false;
-	bool IRunnable.Shutdown { get; set; } = false;
-	bool IRunnable.Startup { get; set; } = false;
-	bool IRunnable.Running { get; set; } = false;
-	void IRunnable.Init() {}
-    void IRunnable.Tick() => Addresses = Dns.GetHostEntry(Domain).AddressList;
+    protected override void Operate() =>  Addresses = Dns.GetHostEntry(Domain).AddressList;
+    protected override void Setup() => Operate();
 }

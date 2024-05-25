@@ -1,35 +1,46 @@
 using System.Net;
 using System.Net.Sockets;
 using App.Core.IO;
+using App.Core.Multithreading;
 
 
 namespace App.Core.Net;
-public abstract class Socket(System.Net.Sockets.Socket socket, int buffer_size)
+public abstract class Socket<R,W> where R : Reader<byte> where W : Writer<byte>
 {
-    public Socket(IPAddress? address, int port, ProtocolType protocol, int buffer_size) : this(new(new IPEndPoint(address ?? IPAddress.Loopback, port).AddressFamily , SocketType.Stream, protocol), buffer_size) {}
+	public Socket(IPAddress address, int port, ProtocolType protocol, R reader, W writer)
+	{
+
+		// Network
+		Endpoint = new IPEndPoint(address, port);
+		Body = new Socket(Endpoint.AddressFamily, SocketType.Stream, protocol); // socket
 
 
+		// Bufferized IO
+		Reader = reader;
+		Writer = writer;
+		Proccesses.Add(Reader);
+		Proccesses.Add(Writer);
 
-    public int BufferSize { get; } = buffer_size;
-    public System.Net.Sockets.Socket Body { get; } = socket;
+	}
+
+
+	/* Network */
+	public EndPoint Endpoint { get; protected set; }
+    public Socket Body { get; }
+
+
+	/* Bufferized IO */
     protected List<IRunnable> Proccesses { get; } = [];
-
-
-	
-	public Reader<byte>? Reader { get; protected set; } = null;
-	public Writer<byte>? Writer { get; protected set; } = null;
+	public R Reader { get; protected set; }
+	public W Writer { get; protected set; }
 	
 	
 
+	/* Controllers */
 	protected abstract void Init();
 	public void Open()
 	{
 		Init();
-
-		 // If null throw null ref exception
-		Proccesses.Add(Reader ?? throw new NullReferenceException("Reader Can't be null"));
-		Proccesses.Add(Reader ?? throw new NullReferenceException("Writer Can't be null"));
-
 		foreach(var proccess in Proccesses) proccess.Start();
 	}
 	public void Close () 
