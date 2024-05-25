@@ -7,7 +7,7 @@ public interface IRunnable
 {
 	/* Data */
 	protected Thread? Thread { get; set; }	// Thread in which IRunnable is running
-	
+	public string Name { get; } // IRunnable and its Thread name
 
 
 
