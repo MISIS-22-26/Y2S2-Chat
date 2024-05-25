@@ -6,7 +6,8 @@ public class Client
     public Client(string address, int port, ProtocolType protocol, int buffer_size = 1024)
     {
         Resolver = new(address, "DNS Resolver");
-        ((Core.Multithreading.IRunnable) Resolver).Start();
+        ((IRunnable) Resolver).Start();
+        
         Socket = new(Resolver.Address, port, protocol, buffer_size);
         Socket.Open();
     }
