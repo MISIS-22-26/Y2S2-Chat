@@ -1,10 +1,7 @@
 namespace App.Client.IO;
-public class Reader(System.Net.Sockets.Socket socket, int buffer_size) : Core.IO.Reader<byte>(buffer_size)
-{
-    private System.Net.Sockets.Socket Socket { get; } = socket;
-    protected override void Read()
-    {
-        if (!Socket.Connected) return;
-        Socket.Receive(Buffer.Body);
-    }
+public class Reader(int buffer_size) : Core.IO.Reader<byte>(buffer_size)
+{	
+	private System.Net.Sockets.Socket? socket { get; set; } = null;
+	public Socket? Socket {  set => socket = value?.Body ?? throw new NullReferenceException("Socket Can Not Be Null!"); }
+	protected override void Read () { while (socket != null && socket.Connected) socket.Receive(Buffer.Body); }
 }
