@@ -12,7 +12,7 @@ public class Client
         Socket.Open();
     }
     private Core.Net.Resolver Resolver { get; }
-    private Net.Socket Socket { get; }
+    private Socket Socket { get; }
     public void Stop()
     {
         ((IRunnable) Resolver).Stop();
