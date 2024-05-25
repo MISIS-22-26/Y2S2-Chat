@@ -1,8 +1,20 @@
-using System.Net;
 using System.Net.Sockets;
+using App.Core.Multithreading;
 namespace App.Client;
-public class Client(IPAddress address, int port, ProtocolType protocol, int buffer_size = 1024)
+public class Client
 {
-    private readonly Net.Socket socket = new(address, port, protocol, buffer_size);
-	public void Start() => socket.Open();
+    public Client(string address, int port, ProtocolType protocol, int buffer_size = 1024)
+    {
+        Resolver = new(address, "DNS Resolver");
+        ((Core.Multithreading.IRunnable) Resolver).Start();
+        Socket = new(Resolver.Address, port, protocol, buffer_size);
+        Socket.Open();
+    }
+    private Core.Net.Resolver Resolver { get; }
+    private Net.Socket Socket { get; }
+    public void Stop()
+    {
+        ((IRunnable) Resolver).Stop();
+        Socket.Close();
+    }
 }
