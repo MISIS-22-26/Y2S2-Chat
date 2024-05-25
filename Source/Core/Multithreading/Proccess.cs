@@ -1,5 +1,5 @@
 namespace App.Core.Multithreading;
-public abstract class Proccess : IRunnable
+public abstract class Proccess(string proccess_name = "IRunnable Proccess") : IRunnable
 {
 	// User-Defined method to be called during initialization
 	protected abstract void Setup();
@@ -16,6 +16,7 @@ public abstract class Proccess : IRunnable
     /* IRunnable Implementation */
 
     Thread? IRunnable.Thread { get; set; } = null;
+	string IRunnable.Name { get; } = proccess_name;
 	bool IRunnable.Initialized { get; set; } = false;
 	bool IRunnable.Initializing { get; set; } = false;
 	bool IRunnable.Shutdown { get; set; } = false;

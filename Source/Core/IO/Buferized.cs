@@ -1,5 +1,5 @@
 namespace App.Core.IO;
-public abstract class Bufferized<T>(int buffer_size) : Multithreading.Proccess
+public abstract class Bufferized<T>(int buffer_size, string proccess_name = "Befferized Proccess") : Multithreading.Proccess(proccess_name)
 {
     protected int Size { get; } = buffer_size; // Default size for each buffer in Buffers
 
